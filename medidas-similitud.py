@@ -15,8 +15,16 @@ data['combined_features'] = data['Title'] + ' ' + data['Genres'] + ' ' + data['A
 tfidf_vectorizer = TfidfVectorizer()
 tfidf_matrix = tfidf_vectorizer.fit_transform(data['combined_features'])
 
-# Calcula la similitud coseno entre las películas
-cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+# Función para calcular la distancia de coseno entre dos vectores
+def coseno_distancia(vector1, vector2):
+    dot_product = np.dot(vector1, vector2)
+    norm_vector1 = np.linalg.norm(vector1)
+    norm_vector2 = np.linalg.norm(vector2)
+
+    coseno_similar = dot_product / (norm_vector1 * norm_vector2)
+    coseno_distancia = 1 - coseno_similar
+
+    return coseno_distancia
 # Calcula la similitud Jaccard entre las películas
 def jaccard_similarity(x, y):
     intersection = len(set(x.split()) & set(y.split()))
@@ -24,14 +32,14 @@ def jaccard_similarity(x, y):
     return intersection / union
 
 jaccard_sim = np.zeros((len(data), len(data)))
-
+#ingresa el numero de pelicula que deseas buscar
 movie_index = 1
 
 # Calcula las puntuaciones de similitud coseno para la película seleccionada
-cosine_scores = list(enumerate(cosine_sim[movie_index]))
+coseno_scores = list(enumerate(cosine_sim[movie_index]))
 
 # Ordena las películas según la similitud coseno en orden descendente
-cosine_scores = sorted(cosine_scores, key=lambda x: x[1], reverse=True)
+coseno_scores = sorted(coseno_scores, key=lambda x: x[1], reverse=True)
 
 # Calcula las puntuaciones de similitud Jaccard para la película seleccionada
 jaccard_scores = list(enumerate(jaccard_sim[movie_index]))
