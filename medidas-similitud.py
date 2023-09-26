@@ -17,6 +17,14 @@ tfidf_matrix = tfidf_vectorizer.fit_transform(data['combined_features'])
 
 # Calcula la similitud coseno entre las películas
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+# Calcula la similitud Jaccard entre las películas
+def jaccard_similarity(x, y):
+    intersection = len(set(x.split()) & set(y.split()))
+    union = len(set(x.split()) | set(y.split()))
+    return intersection / union
+
+jaccard_sim = np.zeros((len(data), len(data)))
+
 movie_index = 1
 
 # Calcula las puntuaciones de similitud coseno para la película seleccionada
