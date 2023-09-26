@@ -1,0 +1,21 @@
+from sklearn.metrics import jaccard_score 
+
+movie_index = 1
+
+# Calcula las puntuaciones de similitud coseno para la película seleccionada
+cosine_scores = list(enumerate(cosine_sim[movie_index]))
+
+# Ordena las películas según la similitud coseno en orden descendente
+cosine_scores = sorted(cosine_scores, key=lambda x: x[1], reverse=True)
+
+# Calcula las puntuaciones de similitud Jaccard para la película seleccionada
+jaccard_scores = list(enumerate(jaccard_sim[movie_index]))
+
+# Ordena las películas según la similitud Jaccard en orden descendente
+jaccard_scores = sorted(jaccard_scores, key=lambda x: x[1], reverse=True)
+
+# Muestra las 5 mejores recomendaciones basadas en similitud coseno
+top_coseno_recomendador = cosine_scores[1:6]
+
+# Muestra las 5 mejores recomendaciones basadas en similitud Jaccard
+top_jaccard_recomendador = jaccard_scores[1:6]
